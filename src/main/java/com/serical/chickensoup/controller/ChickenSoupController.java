@@ -22,8 +22,13 @@ public class ChickenSoupController {
         this.redisTemplate = redisTemplate;
     }
 
-    @GetMapping("/fun")
-    public Mono<ResultEntity> fun() {
+    @GetMapping("/")
+    public Mono<ResultEntity> root() {
+        return redisTemplate.opsForSet().randomMember(CacheKeys.getFunKeys()).map(Result::success);
+    }
+
+    @GetMapping("/chicken")
+    public Mono<ResultEntity> chicken() {
         return redisTemplate.opsForSet().randomMember(CacheKeys.getFunKeys()).map(Result::success);
     }
 }
